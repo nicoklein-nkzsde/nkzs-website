@@ -15,7 +15,7 @@
   --gold:#c9a84c;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6}
+body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;width:100%}
 
 /* ── REVEAL SYSTEM ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
@@ -208,7 +208,7 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
   nav{padding:1rem 1.25rem}
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
-  .hero{padding:6rem 1.25rem 4rem}
+  .hero{padding:6rem 1.25rem 4rem;width:100%;overflow-x:hidden}
   .hero-stats{gap:2rem}
   .sec{padding:4.5rem 1.25rem}
   .firms{grid-template-columns:1fr}
@@ -293,8 +293,41 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
 .egg-close:hover{color:#e8e4df}
 .stars-canvas{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0;transition:opacity .8s}
 .stars-canvas.active{opacity:1}
-.custom-cursor{width:6px;height:6px;background:#c9a84c;border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:transform .1s}
-.custom-cursor-ring{width:30px;height:30px;border:.5px solid rgba(201,168,76,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s}
+.custom-cursor{width:6px;height:6px;background:#c9a84c;border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:transform .1s;display:none}
+.custom-cursor-ring{width:30px;height:30px;border:.5px solid rgba(201,168,76,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;display:none}
+@media(hover:hover) and (pointer:fine){.custom-cursor{display:block}.custom-cursor-ring{display:block}}
+
+/* ── MOBILE FIXES ── */
+@media(max-width:900px){
+  html,body{overflow-x:hidden;width:100%}
+  .sec{padding:4rem 1.25rem;width:100%}
+  nav{padding:1rem 1.25rem;width:100%}
+  .hero{padding:6rem 1.25rem 4rem}
+  .hero-stats{gap:1.5rem}
+  .hstat-n{font-size:28px}
+  /* fix right margin issue - ensure all sections use same padding */
+  section,.sec,.sec-alt{padding-left:1.25rem!important;padding-right:1.25rem!important;box-sizing:border-box}
+  /* kennenlern section */
+  .kl-wrap{grid-template-columns:1fr}
+  /* packages grid extra items */
+  .pkg-grid .pkg{padding:2rem 1.5rem}
+  /* service rows */
+  .svc{padding-left:0!important}
+  /* contact */
+  .contact-grid{gap:2.5rem}
+  /* hero h1 */
+  .hero-h1{font-size:clamp(56px,16vw,90px)}
+  /* firms */
+  .firms{grid-template-columns:1fr}
+  .firm{padding:2rem 1.5rem}
+  /* work grid */
+  .work-grid{grid-template-columns:1fr}
+  /* footer */
+  footer{padding:1.5rem 1.25rem;flex-direction:column;align-items:flex-start}
+  /* pkg extra inline grids */
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -737,23 +770,26 @@ console.log('%c \"Every film should have its own world.\" — Christopher Nolan 
 console.log('%c Du liest Quellcode. Wir mögen dich bereits. ', 'color:rgba(232,228,223,0.35);font-size:11px;font-family:monospace');
 console.log('%c Wenn du filmst oder codest: kontakt@nkzs.de ', 'color:rgba(201,168,76,0.5);font-size:11px;font-family:monospace');
 
-// Custom cursor
+// Custom cursor — desktop only
+const isTouch = window.matchMedia('(hover:none)').matches;
 const cur = document.getElementById('cur');
 const ring = document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-(function animRing(){
-  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,.pkg-btn,.svc,.firm,.wi,.btn-primary,.btn-ghost').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='50px';ring.style.height='50px';cur.style.transform='translate(-50%,-50%) scale(2)';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='30px';ring.style.height='30px';cur.style.transform='translate(-50%,-50%) scale(1)';});
-});
+if(!isTouch){
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+  });
+  (function animRing(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,.pkg-btn,.svc,.firm,.wi,.btn-primary,.btn-ghost').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.width='50px';ring.style.height='50px';cur.style.transform='translate(-50%,-50%) scale(2)';});
+    el.addEventListener('mouseleave',()=>{ring.style.width='30px';ring.style.height='30px';cur.style.transform='translate(-50%,-50%) scale(1)';});
+  });
+}
 
 // EGG 1 — Konami
 const K=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
