@@ -347,6 +347,11 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
 }
 
 
+
+/* thumbnail overlay fix */
+.wi[onclick]{position:relative}
+.wi[onclick] .wi-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
 /* ── VIDEO MODAL ── */
 .vid-modal{
   position:fixed;inset:0;z-index:5000;
@@ -733,7 +738,13 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
           <div class="vid-meta-cat" id="vidCat"></div>
           <div class="vid-meta-title" id="vidTitle"></div>
         </div>
-        <div class="vid-close" onclick="closeVideo()">[ ESC ] schließen</div>
+        <div style="display:flex;align-items:center;gap:1rem;flex-shrink:0">
+          <a id="vidFallback" href="#" target="_blank" style="display:none;align-items:center;gap:.5rem;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:.5px solid rgba(201,168,76,.3);padding:.5rem 1rem">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
+            Auf YouTube öffnen
+          </a>
+          <div class="vid-close" onclick="closeVideo()">[ ESC ] schließen</div>
+        </div>
       </div>
     </div>
   </div>
@@ -996,6 +1007,49 @@ function startStars(){
     requestAnimationFrame(draw);
   })();
 }
+
+// ── VIDEO MODAL ──
+function openVideo(id, title, cat) {
+  const modal = document.getElementById('vidModal');
+  const iframe = document.getElementById('vidIframe');
+  const fallback = document.getElementById('vidFallback');
+  document.getElementById('vidTitle').textContent = title;
+  document.getElementById('vidCat').textContent = cat;
+  fallback.href = 'https://www.youtube.com/watch?v=' + id;
+  iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  clearTimeout(window._vt);
+  window._vt = setTimeout(() => {
+    if(modal.classList.contains('open')) fallback.style.display = 'inline-flex';
+  }, 4000);
+}
+function closeVideo() {
+  document.getElementById('vidModal').classList.remove('open');
+  document.getElementById('vidIframe').src = '';
+  document.getElementById('vidFallback').style.display = 'none';
+  document.body.style.overflow = '';
+  clearTimeout(window._vt);
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeVideo(); });
+
+// Static local thumbnails — guaranteed to show
+const THUMBS = {
+  'vBig1kVT0Qw': 'images/thumb_cinematic.jpg',
+  'POLewwY4faY': 'images/thumb_bialetti.jpg',
+  'mfghWW_6ZCk': 'images/thumb_herzogstand.jpg',
+  'uQRNFUlawgs': 'images/thumb_lions.jpg'
+};
+document.querySelectorAll('.wi[onclick]').forEach(el => {
+  const m = (el.getAttribute('onclick')||'').match(/openVideo\('([^']+)'/);
+  if(!m || !THUMBS[m[1]]) return;
+  el.style.backgroundImage = 'url(' + THUMBS[m[1]] + ')';
+  el.style.backgroundSize = 'cover';
+  el.style.backgroundPosition = 'center';
+  const inner = el.querySelector('.wi-inner');
+  if(inner) { inner.style.opacity = '0'; }
+});
+
 </script>
 
 </body>
