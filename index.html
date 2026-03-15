@@ -1035,10 +1035,10 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeVideo(); }
 
 // Static local thumbnails — guaranteed to show
 const THUMBS = {
-  'vBig1kVT0Qw': 'images/thumb_cinematic.jpg',
-  'POLewwY4faY': 'images/thumb_bialetti.jpg',
-  'mfghWW_6ZCk': 'images/thumb_herzogstand.jpg',
-  'uQRNFUlawgs': 'images/thumb_lions.jpg'
+  'vBig1kVT0Qw': 'thumb_cinematic.jpg',
+  'POLewwY4faY': 'thumb_bialetti.jpg',
+  'mfghWW_6ZCk': 'thumb_herzogstand.jpg',
+  'uQRNFUlawgs': 'thumb_lions.jpg'
 };
 document.querySelectorAll('.wi[onclick]').forEach(el => {
   const m = (el.getAttribute('onclick')||'').match(/openVideo\('([^']+)'/);
