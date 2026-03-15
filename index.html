@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NKZS Production — Film · Content · Social Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@200;300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#171717;--bg4:#1e1e1e;
+  --line:rgba(232,228,223,.1);--line2:rgba(232,228,223,.06);
+  --t1:#e8e4df;--t2:rgba(232,228,223,.55);--t3:rgba(232,228,223,.28);
+  --gold:#c9a84c;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6}
+
+/* ── REVEAL SYSTEM ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.97);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 3rem;
+  background:rgba(10,10,10,0);
+  backdrop-filter:blur(0px);
+  border-bottom:0.5px solid rgba(232,228,223,0);
+  transition:background .4s,backdrop-filter .4s,border-color .4s;
+}
+nav.scrolled{
+  background:rgba(10,10,10,.93);
+  backdrop-filter:blur(18px);
+  border-bottom-color:var(--line);
+}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.18em;color:var(--t1)}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .25s}
+.nav-links a:hover{color:var(--t1)}
+.nav-cta{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:400;border:0.5px solid var(--line);color:var(--t2);padding:.6rem 1.5rem;text-decoration:none;transition:all .25s}
+.nav-cta:hover{border-color:var(--t2);color:var(--t1)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:1px;background:var(--t1);transition:all .3s}
+.mob-menu{display:none;position:fixed;inset:0;z-index:190;background:rgba(10,10,10,.98);flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:.08em;color:var(--t1);text-decoration:none;transition:color .25s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-close{position:absolute;top:1.5rem;right:2rem;font-size:26px;cursor:pointer;color:var(--t3)}
+
+/* ── HERO ── */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:7rem 3rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 35%,rgba(201,168,76,.05) 0%,transparent 55%),var(--bg);will-change:transform}
+.hero-grain{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+}
+.hero-inner{position:relative;z-index:1;max-width:820px}
+
+/* hero word-by-word reveal */
+.hero-eyebrow{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--t3);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:slideUp .8s .2s cubic-bezier(.16,1,.3,1) forwards}
+.hero-eyebrow::before{content:'';width:32px;height:.5px;background:var(--t3)}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,13vw,150px);letter-spacing:.025em;line-height:.91;color:var(--t1)}
+.hero-h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero-h1 .word-inner{display:block;opacity:0;transform:translateY(100%);animation:wordUp .9s cubic-bezier(.16,1,.3,1) forwards}
+.w1{animation-delay:.3s!important}.w2{animation-delay:.42s!important}.w3{animation-delay:.54s!important}.w4{animation-delay:.66s!important}
+.hero-h1 .dim{color:rgba(232,228,223,.18)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.2vw,22px);color:var(--t2);letter-spacing:.06em;margin:1.5rem 0 1rem;opacity:0;animation:slideUp .8s .7s cubic-bezier(.16,1,.3,1) forwards}
+.hero-desc{font-size:14px;color:var(--t2);max-width:460px;line-height:1.85;font-weight:200;margin-bottom:2.5rem;opacity:0;animation:slideUp .8s .82s cubic-bezier(.16,1,.3,1) forwards}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;opacity:0;animation:slideUp .8s .94s cubic-bezier(.16,1,.3,1) forwards}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2.5rem;border-top:0.5px solid var(--line);opacity:0;animation:slideUp .8s 1.06s cubic-bezier(.16,1,.3,1) forwards}
+.hstat-n{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.04em;color:var(--t1);line-height:1}
+.hstat-l{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);margin-top:.2rem}
+
+@keyframes wordUp{to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* cursor line blink on h1 */
+.hero-cursor{display:inline-block;width:3px;height:.85em;background:var(--gold);vertical-align:middle;margin-left:6px;animation:blink 1s .5s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── BUTTONS ── */
+.btn-primary{display:inline-flex;align-items:center;gap:.75rem;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:400;background:var(--t1);color:var(--bg);padding:1rem 2.25rem;text-decoration:none;transition:background .25s,transform .2s;position:relative;overflow:hidden}
+.btn-primary:hover{background:#d0ccc6;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.75rem;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border:0.5px solid var(--line);color:var(--t3);padding:1rem 2.25rem;text-decoration:none;transition:all .25s}
+.btn-ghost:hover{border-color:var(--t2);color:var(--t1)}
+
+/* ── SECTIONS ── */
+.sec{padding:7rem 3rem}
+.sec-alt{background:var(--bg2)}
+.eyebrow{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--t3);margin-bottom:.75rem;display:flex;align-items:center;gap:1rem}
+.eyebrow::before{content:'';width:24px;height:.5px;background:var(--t3)}
+.sec-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5.5vw,64px);letter-spacing:.04em;line-height:.97;color:var(--t1)}
+.rule{height:0.5px;background:var(--line)}
+
+/* ── FIRMS ── */
+.firms{display:grid;grid-template-columns:1fr 1fr;gap:0.5px;background:var(--line);margin-top:4rem}
+.firm{background:var(--bg);padding:3rem 2.5rem;transition:background .35s}
+.firm:hover{background:var(--bg2)}
+.firm-n{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.3em;color:var(--t3);margin-bottom:2rem}
+.firm-big{font-family:'Bebas Neue',sans-serif;font-size:60px;letter-spacing:.04em;color:rgba(232,228,223,.05);line-height:1;margin-bottom:1.25rem;transition:color .35s}
+.firm:hover .firm-big{color:rgba(232,228,223,.09)}
+.firm-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--t1);margin-bottom:.5rem}
+.firm-sub{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:1.25rem}
+.firm-desc{font-size:13px;color:var(--t2);line-height:1.8;font-weight:200;max-width:320px}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.5rem}
+.tag{font-size:9px;letter-spacing:.15em;text-transform:uppercase;border:0.5px solid var(--line);color:var(--t3);padding:.3rem .8rem;transition:border-color .25s,color .25s}
+.firm:hover .tag{border-color:var(--line2);color:rgba(232,228,223,.35)}
+
+/* ── SERVICES ── */
+.svc-list{margin-top:3.5rem}
+.svc{display:grid;grid-template-columns:48px 1fr 150px;align-items:start;gap:2.5rem;padding:2rem 0;border-bottom:0.5px solid var(--line);transition:padding-left .3s;cursor:default;position:relative}
+.svc::after{content:'';position:absolute;left:0;bottom:-0.5px;width:0;height:0.5px;background:var(--t3);transition:width .5s cubic-bezier(.16,1,.3,1)}
+.svc:hover::after{width:100%}
+.svc:hover{padding-left:1.25rem}
+.svc:hover .svc-name{color:var(--t1)}
+.svc-i{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--t3);padding-top:5px}
+.svc-name{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);color:rgba(232,228,223,.85);transition:color .25s;margin-bottom:.35rem}
+.svc-desc{font-size:12px;color:var(--t3);line-height:1.7;font-weight:200}
+.svc-p{font-family:'DM Mono',monospace;font-size:11px;color:var(--t2);letter-spacing:.08em;text-align:right;padding-top:6px}
+
+/* ── PACKAGES ── */
+.pkg-wrap{margin-top:3.5rem}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5px;background:var(--line)}
+.pkg{background:var(--bg2);padding:2.75rem 2.25rem;display:flex;flex-direction:column;transition:background .3s}
+.pkg:hover{background:var(--bg3)}
+.pkg-hot{background:var(--bg3);border-top:1px solid var(--gold)}
+.pkg-hot:hover{background:var(--bg4)}
+.pkg-badge{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+.pkg-name{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--t3);margin-bottom:1.25rem}
+.pkg-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4.5vw,52px);letter-spacing:.02em;color:var(--t1);line-height:1}
+.pkg-mo{font-size:11px;letter-spacing:.1em;color:var(--t3);margin:.3rem 0 2rem}
+.pkg-ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;flex:1}
+.pkg-ul li{font-size:12px;color:var(--t2);display:flex;gap:.75rem;align-items:flex-start;line-height:1.5}
+.pkg-ul li::before{content:'—';flex-shrink:0;color:var(--t3)}
+.pkg-btn{display:block;margin-top:2rem;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:.85rem;text-decoration:none;transition:all .25s;border:0.5px solid var(--line);color:var(--t3)}
+.pkg-btn:hover{border-color:var(--t2);color:var(--t1)}
+.pkg-btn-gold{background:var(--gold);color:#0a0a0a;border-color:var(--gold);font-weight:500}
+.pkg-btn-gold:hover{background:#b8923a;border-color:#b8923a;color:#0a0a0a}
+.pkg-foot{background:var(--bg3);padding:1.75rem 2.25rem;border-top:0.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.pkg-foot p{font-size:13px;color:var(--t2);font-weight:200}
+.pkg-foot strong{color:var(--t1);font-weight:400}
+.link-gold{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:0.5px solid rgba(201,168,76,.25);padding:.7rem 1.4rem;transition:border-color .25s,transform .2s;display:inline-block}
+.link-gold:hover{border-color:var(--gold);transform:translateY(-1px)}
+
+/* ── WORK ── */
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5px;background:var(--line);margin-top:4rem}
+.wi{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--bg3);cursor:pointer}
+.wi.full{grid-column:1/-1;aspect-ratio:21/9}
+.wi-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:clamp(13px,2vw,18px);color:rgba(232,228,223,.12);letter-spacing:.1em;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.wi:hover .wi-inner{transform:scale(1.05)}
+.wi-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.92) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;opacity:0;transition:opacity .4s}
+.wi:hover .wi-ov,.wi.full .wi-ov{opacity:1}
+.wi-cat{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--t3);margin-bottom:.35rem}
+.wi-title{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,22px);color:var(--t1);transform:translateY(6px);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.wi:hover .wi-title,.wi.full .wi-title{transform:translateY(0)}
+
+/* ── PROCESS ── */
+.proc{display:grid;grid-template-columns:repeat(5,1fr);border:0.5px solid var(--line);margin-top:4rem}
+.ps{padding:2rem 1.5rem;border-right:0.5px solid var(--line);transition:background .3s}
+.ps:last-child{border-right:none}
+.ps:hover{background:var(--bg2)}
+.ps-n{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.25em;color:var(--t3);margin-bottom:1.5rem}
+.ps-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--t1);margin-bottom:.5rem}
+.ps-desc{font-size:11px;color:var(--t3);line-height:1.65;font-weight:200}
+
+/* ── TEAM ── */
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5px;background:var(--line);margin-top:4rem}
+.tm{background:var(--bg);padding:2rem 1.75rem;transition:background .3s}
+.tm:hover{background:var(--bg2)}
+.tm-icon{width:32px;height:32px;border:0.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--t2);margin-bottom:1.25rem;transition:border-color .3s,color .3s}
+.tm:hover .tm-icon{border-color:var(--t2);color:var(--t1)}
+.tm-name{font-size:13px;font-weight:400;color:var(--t1);margin-bottom:.35rem}
+.tm-desc{font-size:11px;color:var(--t3);line-height:1.65;font-weight:200}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.c-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,84px);letter-spacing:.04em;line-height:.92;color:var(--t1)}
+.c-h .g{color:var(--gold)}
+.c-note{font-size:13px;color:var(--t2);margin-top:1.25rem;line-height:1.85;font-weight:200;max-width:340px}
+.c-lines{display:flex;flex-direction:column}
+.cl{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;border-bottom:0.5px solid var(--line);font-size:13px}
+.ck{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.cv{color:var(--t1)}
+.cv a{color:var(--gold);text-decoration:none;transition:opacity .2s}
+.cv a:hover{opacity:.75}
+.c-btns{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:var(--bg)}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.15em;color:var(--t3)}
+.f-copy{font-size:11px;color:var(--t3);letter-spacing:.08em}
+.f-links{display:flex;gap:1.5rem}
+.f-links a{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .25s}
+.f-links a:hover{color:var(--t1)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.25rem}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .hero{padding:6rem 1.25rem 4rem}
+  .hero-stats{gap:2rem}
+  .sec{padding:4.5rem 1.25rem}
+  .firms{grid-template-columns:1fr}
+  .svc{grid-template-columns:36px 1fr;gap:1rem}
+  .svc-p{display:none}
+  .pkg-grid{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr}
+  .wi.full{grid-column:auto;aspect-ratio:16/9}
+  .wi-ov{opacity:1}.wi-title{transform:translateY(0)}
+  .proc{grid-template-columns:1fr 1fr}
+  .ps:nth-child(2){border-right:none}
+  .ps:nth-child(n+3){border-top:0.5px solid var(--line)}
+  .ps:nth-child(5){grid-column:1/-1;border-right:none}
+  .team{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  footer{flex-direction:column;align-items:flex-start}
+  .pkg-foot{flex-direction:column;align-items:flex-start}
+}
+
+/* progress bar */
+#progress{position:fixed;top:0;left:0;z-index:300;height:2px;background:var(--gold);width:0%;transition:width .1s linear}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <div class="logo">NKZS</div>
+  <div class="nav-links">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#pakete">Pakete</a>
+    <a href="#arbeiten">Referenzen</a>
+    <a href="#team">Team</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+  <a href="#kontakt" class="nav-cta">Anfragen</a>
+  <div class="hamburger" id="hbg" onclick="document.getElementById('mm').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mm">
+  <span class="mob-close" onclick="document.getElementById('mm').classList.remove('open')">✕</span>
+  <a href="#leistungen" onclick="document.getElementById('mm').classList.remove('open')">Leistungen</a>
+  <a href="#pakete" onclick="document.getElementById('mm').classList.remove('open')">Pakete</a>
+  <a href="#arbeiten" onclick="document.getElementById('mm').classList.remove('open')">Referenzen</a>
+  <a href="#team" onclick="document.getElementById('mm').classList.remove('open')">Team</a>
+  <a href="#kontakt" onclick="document.getElementById('mm').classList.remove('open')">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Filmproduktion & Social Media — Gießen & Frankfurt</div>
+    <h1 class="hero-h1">
+      <span class="word"><span class="word-inner w1">DEIN</span></span><br>
+      <span class="word"><span class="word-inner w2">UNTER-</span></span><br>
+      <span class="word"><span class="word-inner w3">NEHMEN.</span></span><br>
+      <span class="dim"><span class="word"><span class="word-inner w4">IN BEWEGUNG.</span></span></span>
+      <span class="hero-cursor"></span>
+    </h1>
+    <p class="hero-sub">We capture emotion in motion.</p>
+    <p class="hero-desc">Cineastische Firmenfilme, Imagefilme und Werbevideos — und auf Wunsch komplettes Social Media Management. Alles aus einer Hand, 8 Profis, ein fester Ansprechpartner.</p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn-primary">Kostenloses Erstgespräch →</a>
+      <a href="#arbeiten" class="btn-ghost">Referenzen ansehen</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-n" data-count="8" data-suffix="">0</div><div class="hstat-l">Personen im Team</div></div>
+      <div><div class="hstat-n" data-count="50" data-suffix="+">0</div><div class="hstat-l">Produktionen</div></div>
+      <div><div class="hstat-n" data-count="24" data-suffix="h">0</div><div class="hstat-l">Reaktionszeit</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- TWO FIRMS -->
+<section class="sec" id="leistungen">
+  <div class="eyebrow reveal">Was wir sind</div>
+  <h2 class="sec-h2 reveal d1">ZWEI KOMPETENZEN.<br>EIN PARTNER.</h2>
+  <div class="firms">
+    <div class="firm reveal d1">
+      <div class="firm-n">01 / NKZS PRODUCTION</div>
+      <div class="firm-big">FILM</div>
+      <div class="firm-title">Filmproduktion & Creative Direction</div>
+      <div class="firm-sub">Video · Photo · Drohne · Post</div>
+      <p class="firm-desc">Cineastische Firmenfilme, Imagefilme, Werbevideos und Doku-Portraits im 16:9-Format. Von Konzept bis Final Cut — vollständig inhouse produziert.</p>
+      <div class="tags">
+        <span class="tag">Imagefilm</span><span class="tag">Commercial</span>
+        <span class="tag">Doku-Style</span><span class="tag">Unternehmensportrait</span>
+        <span class="tag">Drohne</span><span class="tag">Fotografie</span>
+      </div>
+    </div>
+    <div class="firm reveal d2">
+      <div class="firm-n">02 / NKZS SOCIAL</div>
+      <div class="firm-big">SMMA</div>
+      <div class="firm-title">Social Media Management & Agentur</div>
+      <div class="firm-sub">Strategie · Content · Community · Ads</div>
+      <p class="firm-desc">Unser dediziertes Social-Team übernimmt komplett eure Accounts. Reels, Posts, Stories, Ads — monatlich, konsistent, messbar.</p>
+      <div class="tags">
+        <span class="tag">Instagram</span><span class="tag">TikTok</span>
+        <span class="tag">LinkedIn</span><span class="tag">Content Strategie</span>
+        <span class="tag">Paid Ads</span><span class="tag">Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SERVICES -->
+<section class="sec sec-alt">
+  <div class="eyebrow reveal">Leistungen</div>
+  <h2 class="sec-h2 reveal d1">WAS WIR LIEFERN</h2>
+  <div class="svc-list">
+    <div class="svc reveal d1"><div class="svc-i">01</div><div><div class="svc-name">Imagefilm & Unternehmensfilm</div><div class="svc-desc">Cinématisches 16:9 — euer Unternehmen in seiner besten Form. Skript, Dreh, Schnitt, Color, Musik.</div></div><div class="svc-p">ab 2.500 €</div></div>
+    <div class="svc reveal d2"><div class="svc-i">02</div><div><div class="svc-name">Commercial & Werbefilm</div><div class="svc-desc">Produkt- und Markenwerbung mit Wirkung. Scripted, inszeniert — für Online, Social oder TV.</div></div><div class="svc-p">ab 3.500 €</div></div>
+    <div class="svc reveal d3"><div class="svc-i">03</div><div><div class="svc-name">Doku-Style Unternehmensportrait</div><div class="svc-desc">Authentische Einblicke hinter die Kulissen — Mitarbeiter, Prozesse, Werte. Filmisch, menschlich nah.</div></div><div class="svc-p">ab 2.000 €</div></div>
+    <div class="svc reveal d4"><div class="svc-i">04</div><div><div class="svc-name">Social Media Content Produktion</div><div class="svc-desc">Monatliche Pakete für Instagram, TikTok & LinkedIn. Reels, Stories, Fotos — strategisch geplant.</div></div><div class="svc-p">ab 1.250 € / Mo.</div></div>
+    <div class="svc reveal d5"><div class="svc-i">05</div><div><div class="svc-name">Full-Service Social Media Management</div><div class="svc-desc">Strategie, Content, Community, Paid Ads, Reporting — komplett übernommen.</div></div><div class="svc-p">ab 2.200 € / Mo.</div></div>
+    <div class="svc reveal d6"><div class="svc-i">06</div><div><div class="svc-name">Fotografie & Corporate Photography</div><div class="svc-desc">Team-Portraits, Produkt- und Eventfotografie. Bilder, die überall passen.</div></div><div class="svc-p">auf Anfrage</div></div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="sec" id="pakete">
+  <div class="eyebrow reveal">Monatspakete</div>
+  <h2 class="sec-h2 reveal d1">PLANBARE KOSTEN.<br>KONSTANTE QUALITÄT.</h2>
+  <p class="reveal d2" style="font-size:14px;color:var(--t2);margin-top:1rem;max-width:480px;line-height:1.85;font-weight:200">Monatliche Pakete — feste Konditionen, fester Ansprechpartner, kein Overhead.</p>
+  <div class="pkg-wrap reveal d3">
+    <div class="pkg-grid">
+      <div class="pkg">
+        <div class="pkg-name">Content Start</div>
+        <div class="pkg-price">1.250 €</div>
+        <div class="pkg-mo">pro Monat · zzgl. MwSt.</div>
+        <ul class="pkg-ul">
+          <li>3 Reels / Kurzvideos pro Woche</li>
+          <li>Schnitt, Color Grading, Musik</li>
+          <li>1× Drehtag pro Monat</li>
+          <li>Captions & Hashtag-Strategie</li>
+          <li>Planung & Upload</li>
+        </ul>
+        <a href="#kontakt" class="pkg-btn">Anfragen →</a>
+      </div>
+      <div class="pkg pkg-hot">
+        <span class="pkg-badge">★ Beliebtestes Paket</span>
+        <div class="pkg-name">Content + Management</div>
+        <div class="pkg-price">2.200 €</div>
+        <div class="pkg-mo">pro Monat · zzgl. MwSt.</div>
+        <ul class="pkg-ul">
+          <li>5 Reels + Stories pro Woche</li>
+          <li>Content-Strategie & Redaktionsplan</li>
+          <li>2× Drehtage pro Monat</li>
+          <li>Community Management</li>
+          <li>Monatliches Performance-Reporting</li>
+          <li>Dedizierter Ansprechpartner</li>
+        </ul>
+        <a href="#kontakt" class="pkg-btn pkg-btn-gold">Anfragen →</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Full Service</div>
+        <div class="pkg-price" style="font-size:28px;padding-top:8px">Individuell</div>
+        <div class="pkg-mo">nach Absprache</div>
+        <ul class="pkg-ul">
+          <li>Multi-Plattform (IG, TikTok, LI, YT)</li>
+          <li>Paid Ads Management</li>
+          <li>Komplette Contentproduktion</li>
+          <li>Strategie-Workshops</li>
+          <li>Priority Support & individuelle SLA</li>
+        </ul>
+        <a href="#kontakt" class="pkg-btn">Anfragen →</a>
+      </div>
+    </div>
+    <div class="pkg-foot">
+      <p><strong>Nur Filmproduktion ohne Abo?</strong> Kein Problem — wir erstellen ein individuelles Angebot.</p>
+      <a href="#kontakt" class="link-gold">Einzelproduktion anfragen →</a>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- WORK -->
+<section class="sec sec-alt" id="arbeiten">
+  <div class="eyebrow reveal">Referenzen</div>
+  <h2 class="sec-h2 reveal d1">SELECTED WORK</h2>
+  <div class="work-grid reveal d2">
+    <div class="wi full"><div class="wi-inner" style="background:linear-gradient(135deg,#0d160d,#0a0a0a)">Showreel 2025</div><div class="wi-ov"><div class="wi-cat">Showreel · 2025</div><div class="wi-title">NKZS Showreel 2025</div></div></div>
+    <div class="wi"><div class="wi-inner" style="background:linear-gradient(135deg,#160e08,#0a0a0a)">Lion's 987s</div><div class="wi-ov"><div class="wi-cat">Automotive · Kurzfilm</div><div class="wi-title">Lion's 987s</div></div></div>
+    <div class="wi"><div class="wi-inner" style="background:linear-gradient(135deg,#08101a,#0a0a0a)">Herzogstand 4vsDunya</div><div class="wi-ov"><div class="wi-cat">Documentary · Portrait</div><div class="wi-title">Herzogstand 4vsDunya</div></div></div>
+    <div class="wi"><div class="wi-inner" style="background:linear-gradient(135deg,#140e08,#0a0a0a)">Coffee Bialetti</div><div class="wi-ov"><div class="wi-cat">Brand Film · Commercial</div><div class="wi-title">Coffee with the Bialetti</div></div></div>
+    <div class="wi" style="cursor:default"><div class="wi-inner" style="background:var(--bg3)"></div><div class="wi-ov" style="opacity:1;background:linear-gradient(to top,rgba(10,10,10,.97),rgba(10,10,10,.6))"><div class="wi-cat" style="color:var(--gold)">Nächste Produktion</div><div class="wi-title">Das könnte euer Unternehmen sein →</div></div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec">
+  <div class="eyebrow reveal">Ablauf</div>
+  <h2 class="sec-h2 reveal d1">SO LÄUFT ES AB</h2>
+  <div class="proc">
+    <div class="ps reveal d1"><div class="ps-n">01</div><div class="ps-name">Erstgespräch</div><div class="ps-desc">Kostenlos & unverbindlich. Wir verstehen euer Unternehmen und eure Ziele.</div></div>
+    <div class="ps reveal d2"><div class="ps-n">02</div><div class="ps-name">Konzept & Angebot</div><div class="ps-desc">Maßgeschneidertes Konzept und transparentes Angebot innerhalb 48h.</div></div>
+    <div class="ps reveal d3"><div class="ps-n">03</div><div class="ps-name">Produktion</div><div class="ps-desc">Dreh, Fotografie, Skript — alles inhouse, termingenau und professionell.</div></div>
+    <div class="ps reveal d4"><div class="ps-n">04</div><div class="ps-name">Postproduktion</div><div class="ps-desc">Schnitt, Color, Musik, Grafik — Output in eurem Wunschformat.</div></div>
+    <div class="ps reveal d5"><div class="ps-n">05</div><div class="ps-name">Go Live & Betreuung</div><div class="ps-desc">Veröffentlichung und auf Wunsch laufende monatliche Betreuung.</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- TEAM -->
+<section class="sec sec-alt" id="team">
+  <div class="eyebrow reveal">Das Team</div>
+  <h2 class="sec-h2 reveal d1">8 PROFIS. EIN ZIEL.</h2>
+  <div class="team">
+    <div class="tm reveal d1"><div class="tm-icon">▶</div><div class="tm-name">Regie & Creative Direction</div><div class="tm-desc">Konzept, Skript und visuelle Leitung jeder Produktion.</div></div>
+    <div class="tm reveal d2"><div class="tm-icon">◉</div><div class="tm-name">Kamera & Videografie</div><div class="tm-desc">Mehrköpfiges Kamerateam — vom Solo-Shoot bis zur Multicam-Produktion.</div></div>
+    <div class="tm reveal d3"><div class="tm-icon">✦</div><div class="tm-name">Schnitt & Postproduktion</div><div class="tm-desc">Dedizierter Cutter für Schnitt, Color Grading und finalen Output.</div></div>
+    <div class="tm reveal d4"><div class="tm-icon">↑</div><div class="tm-name">Social Media & Betreuung</div><div class="tm-desc">2 spezialisierte Manager für Accounts, Community und Kundenkommunikation.</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="kontakt">
+  <div class="contact-grid">
+    <div>
+      <div class="eyebrow reveal">Kontakt</div>
+      <h2 class="c-h reveal d1">BEREIT<br>FÜR DEN<br><span class="g">NÄCHSTEN<br>SCHRITT?</span></h2>
+      <p class="c-note reveal d2">Schreibt uns kurz was ihr vorhabt — wir melden uns innerhalb von 24 Stunden für ein kostenloses Erstgespräch.</p>
+    </div>
+    <div class="reveal d2">
+      <div class="c-lines">
+        <div class="cl"><span class="ck">E-Mail</span><span class="cv"><a href="mailto:info@nkzs.de">info@nkzs.de</a></span></div>
+        <div class="cl"><span class="ck">Instagram</span><span class="cv"><a href="https://instagram.com/nkzs" target="_blank">@nkzs</a></span></div>
+        <div class="cl"><span class="ck">Website</span><span class="cv">nkzs.de</span></div>
+        <div class="cl"><span class="ck">Standort</span><span class="cv">Gießen · Frankfurt · überregional</span></div>
+        <div class="cl"><span class="ck">Reaktionszeit</span><span class="cv" style="color:var(--gold)">innerhalb 24h</span></div>
+      </div>
+      <div class="c-btns">
+        <a href="mailto:info@nkzs.de" class="btn-primary">Jetzt anfragen →</a>
+        <a href="#pakete" class="btn-ghost">Pakete ansehen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">NKZS</div>
+  <div class="f-copy">© 2026 NKZS Production · Kleinunternehmer gem. §19 UStG · Gießen</div>
+  <div class="f-links"><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+</footer>
+
+<script>
+// ── SCROLL PROGRESS BAR ──
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const p = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  bar.style.width = (p * 100) + '%';
+}, {passive:true});
+
+// ── NAV SCROLL STATE ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+// ── PARALLAX HERO BG ──
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  if (window.scrollY < window.innerHeight) {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+  }
+}, {passive:true});
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// ── COUNT UP NUMBERS ──
+function countUp(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400;
+  const start = performance.now();
+  const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const val = Math.round(ease(progress) * target);
+    el.textContent = val + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const statsObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(countUp);
+      statsObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.hero-stats').forEach(el => statsObs.observe(el));
+
+// ── CURSOR BLINK OFF AFTER TITLE DONE ──
+setTimeout(() => {
+  const cur = document.querySelector('.hero-cursor');
+  if (cur) cur.style.display = 'none';
+}, 5500);
+</script>
+</body>
+</html>
