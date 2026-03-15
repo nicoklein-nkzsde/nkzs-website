@@ -228,6 +228,52 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
   .pkg-foot{flex-direction:column;align-items:flex-start}
 }
 
+
+/* ── KENNENLERN SECTION ── */
+.kl-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.5px;
+  background:var(--line);margin-top:4rem;
+}
+.kl-left{
+  background:var(--bg3);padding:3rem 2.5rem;
+  position:relative;overflow:hidden;
+}
+.kl-left::before{
+  content:'150';
+  font-family:'Bebas Neue',sans-serif;
+  font-size:180px;letter-spacing:-.02em;
+  color:rgba(201,168,76,.04);
+  position:absolute;right:-10px;bottom:-20px;
+  line-height:1;pointer-events:none;
+}
+.kl-price{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,8vw,88px);
+  letter-spacing:.02em;line-height:.95;color:var(--t1);
+  margin-bottom:.5rem;
+}
+.kl-price span{color:var(--gold)}
+.kl-instead{
+  font-size:12px;color:var(--t3);letter-spacing:.1em;
+  text-decoration:line-through;margin-bottom:1.5rem;
+  font-family:'DM Mono',monospace;
+}
+.kl-desc{font-size:13px;color:var(--t2);line-height:1.85;font-weight:200;max-width:320px}
+.kl-right{background:var(--bg2);padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:space-between}
+.kl-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-bottom:2rem}
+.kl-list li{font-size:13px;color:var(--t2);display:flex;gap:.75rem;align-items:flex-start;line-height:1.5}
+.kl-list li::before{content:'✓';color:var(--gold);flex-shrink:0;font-size:12px}
+.kl-note{
+  padding:1rem 1.25rem;
+  border:.5px solid var(--line);
+  font-size:11px;color:var(--t3);line-height:1.7;
+}
+.kl-note strong{color:var(--t2);font-weight:400}
+@media(max-width:900px){
+  .kl-wrap{grid-template-columns:1fr}
+  .kl-left::before{font-size:120px}
+}
+
 /* progress bar */
 #progress{position:fixed;top:0;left:0;z-index:300;height:2px;background:var(--gold);width:0%;transition:width .1s linear}
 
@@ -259,12 +305,13 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
   <div class="logo">NKZS</div>
   <div class="nav-links">
     <a href="#leistungen">Leistungen</a>
+    <a href="#einstieg">Einstieg</a>
     <a href="#pakete">Pakete</a>
     <a href="#arbeiten">Referenzen</a>
     <a href="#team">Team</a>
     <a href="#kontakt">Kontakt</a>
   </div>
-  <a href="#kontakt" class="nav-cta">Anfragen</a>
+  <a href="https://www.instagram.com/nkzs.de/" target="_blank" class="nav-cta" style="display:inline-flex;align-items:center;gap:.5rem;margin-right:.5rem"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><a href="#kontakt" class="nav-cta">Anfragen</a>
   <div class="hamburger" id="hbg" onclick="document.getElementById('mm').classList.toggle('open')">
     <span></span><span></span><span></span>
   </div>
@@ -277,6 +324,7 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
   <a href="#arbeiten" onclick="document.getElementById('mm').classList.remove('open')">Referenzen</a>
   <a href="#team" onclick="document.getElementById('mm').classList.remove('open')">Team</a>
   <a href="#kontakt" onclick="document.getElementById('mm').classList.remove('open')">Kontakt</a>
+  <a href="https://www.instagram.com/nkzs.de/" target="_blank" style="font-size:24px;letter-spacing:.05em">@nkzs.de</a>
 </div>
 
 <!-- HERO -->
@@ -351,8 +399,45 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
     <div class="svc reveal d2"><div class="svc-i">02</div><div><div class="svc-name">Commercial & Werbefilm</div><div class="svc-desc">Produkt- und Markenwerbung mit Wirkung. Scripted, inszeniert — für Online, Social oder TV.</div></div><div class="svc-p">ab 3.500 €</div></div>
     <div class="svc reveal d3"><div class="svc-i">03</div><div><div class="svc-name">Doku-Style Unternehmensportrait</div><div class="svc-desc">Authentische Einblicke hinter die Kulissen — Mitarbeiter, Prozesse, Werte. Filmisch, menschlich nah.</div></div><div class="svc-p">ab 2.000 €</div></div>
     <div class="svc reveal d4"><div class="svc-i">04</div><div><div class="svc-name">Social Media Content Produktion</div><div class="svc-desc">Monatliche Pakete für Instagram, TikTok & LinkedIn. Reels, Stories, Fotos — strategisch geplant.</div></div><div class="svc-p">ab 1.250 € / Mo.</div></div>
-    <div class="svc reveal d5"><div class="svc-i">05</div><div><div class="svc-name">Full-Service Social Media Management</div><div class="svc-desc">Strategie, Content, Community, Paid Ads, Reporting — komplett übernommen.</div></div><div class="svc-p">ab 2.200 € / Mo.</div></div>
-    <div class="svc reveal d6"><div class="svc-i">06</div><div><div class="svc-name">Fotografie & Corporate Photography</div><div class="svc-desc">Team-Portraits, Produkt- und Eventfotografie. Bilder, die überall passen.</div></div><div class="svc-p">auf Anfrage</div></div>
+        <div class="svc reveal d5"><div class="svc-i">05</div><div><div class="svc-name">Full-Service Social Media Management</div><div class="svc-desc">Strategie, Content, Community, Paid Ads, Reporting — komplett übernommen.</div></div><div class="svc-p">ab 2.200 € / Mo.</div></div>
+    <div class="svc reveal d6"><div class="svc-i">06</div><div><div class="svc-name">Fotografie — Outdoor & Immobilien</div><div class="svc-desc">Outdoor/Street Shooting: 1–2 Std., bis 300 Aufnahmen, 25 Bilder zur Auswahl, inkl. Bearbeitung. Immobilienfotografie auf Anfrage.</div></div><div class="svc-p">ab 50 €</div></div><div><div class="svc-name">Fotografie & Corporate Photography</div><div class="svc-desc">Team-Portraits, Produkt- und Eventfotografie. Bilder, die überall passen.</div></div><div class="svc-p">auf Anfrage</div></div>
+  </div>
+</section>
+
+<!-- KENNENLERN SECTION -->
+<div class="rule"></div>
+<section class="sec" id="einstieg">
+  <div class="eyebrow reveal">Neu hier?</div>
+  <h2 class="sec-h2 reveal d1">LERN UNS<br>KENNEN.</h2>
+  <p class="reveal d2" style="font-size:14px;color:var(--t2);margin-top:1rem;max-width:500px;line-height:1.85;font-weight:200">
+    Noch unsicher ob wir zusammenpassen? Kein Problem.<br>
+    Überzeug dich selbst — mit einem echten Drehtag zu einem Bruchteil des normalen Preises.
+  </p>
+  <div class="kl-wrap reveal d3">
+    <div class="kl-left">
+      <div class="kl-price">150 <span>€</span></div>
+      <div class="kl-instead">statt ab 1.250 €</div>
+      <p class="kl-desc">
+        Ein vollwertiger Drehtag mit unserem Team. Ihr seht wie wir arbeiten, 
+        was wir können — und entscheidet danach in Ruhe.
+      </p>
+    </div>
+    <div class="kl-right">
+      <ul class="kl-list">
+        <li>Vollwertiger Drehtag mit professionellem Equipment</li>
+        <li>Schnitt, Color Grading & Musik inklusive</li>
+        <li>Ihr erhaltet das fertige Material zur freien Nutzung</li>
+        <li>Wir dürfen das Footage für unser Portfolio verwenden</li>
+        <li>Kein Vertrag, keine Folgepflicht</li>
+        <li>Anrechnung auf erstes Paket bei Buchung möglich</li>
+      </ul>
+      <div class="kl-note">
+        <strong>Wichtig:</strong> Das Angebot gilt einmalig pro Unternehmen und beinhaltet 
+        eine kurze schriftliche Vereinbarung zur beidseitigen Nutzung des Materials. 
+        So sind beide Seiten abgesichert.
+      </div>
+      <a href="#kontakt" class="btn-primary" style="margin-top:2rem;display:inline-flex;align-items:center;gap:.75rem">Kennenlern-Dreh anfragen →</a>
+    </div>
   </div>
 </section>
 
@@ -360,54 +445,104 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
 <section class="sec" id="pakete">
   <div class="eyebrow reveal">Monatspakete</div>
   <h2 class="sec-h2 reveal d1">PLANBARE KOSTEN.<br>KONSTANTE QUALITÄT.</h2>
-  <p class="reveal d2" style="font-size:14px;color:var(--t2);margin-top:1rem;max-width:480px;line-height:1.85;font-weight:200">Monatliche Pakete — feste Konditionen, fester Ansprechpartner, kein Overhead.</p>
+  <p class="reveal d2" style="font-size:14px;color:var(--t2);margin-top:1rem;max-width:520px;line-height:1.85;font-weight:200">Monatliche Pakete — feste Konditionen, fester Ansprechpartner, kein Overhead. Alle Preise netto zzgl. MwSt.</p>
   <div class="pkg-wrap reveal d3">
     <div class="pkg-grid">
       <div class="pkg">
-        <div class="pkg-name">Content Start</div>
-        <div class="pkg-price">1.250 €</div>
-        <div class="pkg-mo">pro Monat · zzgl. MwSt.</div>
+        <div class="pkg-name">Starter</div>
+        <div class="pkg-price">550 €</div>
+        <div class="pkg-mo">pro Monat · netto</div>
         <ul class="pkg-ul">
-          <li>3 Reels / Kurzvideos pro Woche</li>
-          <li>Schnitt, Color Grading, Musik</li>
+          <li>5 Reels pro Monat</li>
           <li>1× Drehtag pro Monat</li>
-          <li>Captions & Hashtag-Strategie</li>
-          <li>Planung & Upload</li>
+          <li>Schnitt, Color Grading, Musik</li>
+          <li>Lieferung gebrauchsfertig</li>
+          <li>Zusatz-Reels: +80 € / Stück oder auf nächsten Monat übertragen</li>
         </ul>
+        <div style="margin-top:1.25rem;padding:.75rem;border:.5px solid var(--line);font-size:11px;color:var(--t3);line-height:1.6">Kein Social Media Management,<br>keine Meta-Beratung in diesem Paket</div>
         <a href="#kontakt" class="pkg-btn">Anfragen →</a>
       </div>
       <div class="pkg pkg-hot">
         <span class="pkg-badge">★ Beliebtestes Paket</span>
-        <div class="pkg-name">Content + Management</div>
-        <div class="pkg-price">2.200 €</div>
-        <div class="pkg-mo">pro Monat · zzgl. MwSt.</div>
+        <div class="pkg-name">Growth</div>
+        <div class="pkg-price">1.200 €</div>
+        <div class="pkg-mo">pro Monat · netto</div>
         <ul class="pkg-ul">
-          <li>5 Reels + Stories pro Woche</li>
-          <li>Content-Strategie & Redaktionsplan</li>
+          <li>12 Reels pro Monat</li>
           <li>2× Drehtage pro Monat</li>
-          <li>Community Management</li>
-          <li>Monatliches Performance-Reporting</li>
-          <li>Dedizierter Ansprechpartner</li>
+          <li>Schnitt, Color Grading, Musik</li>
+          <li>Social Media Management</li>
+          <li>Planung, Upload & Captions</li>
+          <li>Basis Meta-Beratung</li>
+          <li>Monatliches Reporting</li>
+          <li>Zusatz-Reels: +70 € / Stück</li>
         </ul>
         <a href="#kontakt" class="pkg-btn pkg-btn-gold">Anfragen →</a>
       </div>
       <div class="pkg">
-        <div class="pkg-name">Full Service</div>
-        <div class="pkg-price" style="font-size:28px;padding-top:8px">Individuell</div>
-        <div class="pkg-mo">nach Absprache</div>
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-price">2.200 €</div>
+        <div class="pkg-mo">pro Monat · netto</div>
         <ul class="pkg-ul">
-          <li>Multi-Plattform (IG, TikTok, LI, YT)</li>
-          <li>Paid Ads Management</li>
-          <li>Komplette Contentproduktion</li>
-          <li>Strategie-Workshops</li>
-          <li>Priority Support & individuelle SLA</li>
+          <li>20+ Reels + Stories + Foto-Content</li>
+          <li>3–4 Drehtage pro Monat</li>
+          <li>Komplettes Social Media Management</li>
+          <li>Meta Ads Begleitung & Strategie</li>
+          <li>Redaktionsplan & Community Management</li>
+          <li>Dedizierter Ansprechpartner</li>
+          <li>Zusatz-Reels: +60 € / Stück</li>
         </ul>
         <a href="#kontakt" class="pkg-btn">Anfragen →</a>
       </div>
     </div>
-    <div class="pkg-foot">
-      <p><strong>Nur Filmproduktion ohne Abo?</strong> Kein Problem — wir erstellen ein individuelles Angebot.</p>
-      <a href="#kontakt" class="link-gold">Einzelproduktion anfragen →</a>
+
+    <div style="margin-top:.5px;background:var(--bg3);border-top:.5px solid var(--line)">
+      <div style="padding:2rem 2.25rem;border-bottom:.5px solid var(--line)">
+        <p style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--t3);margin-bottom:1.25rem">Filmproduktion — Einmalproduktionen</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5px;background:var(--line)">
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Imagefilm & Unternehmensfilm</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">Inkl. Konzept, Dreh, Schnitt, Color, Musik.<br>Gemietetes Equipment (z.B. Licht) on top.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">ab 1.250 €</div>
+          </div>
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Commercial & Werbefilm</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">Scripted, inszeniert — für Online, Social oder TV.<br>Gemietetes Equipment on top.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">ab 2.000 €</div>
+          </div>
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Doku-Style Portrait</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">Authentisch, menschlich nah — Mitarbeiter, Prozesse, Werte.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">ab 1.200 €</div>
+          </div>
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Drohnenaufnahmen</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">Lizenzierte Luftaufnahmen für Immobilien, Events, Werbung.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">ab 400 €</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:2rem 2.25rem;border-bottom:.5px solid var(--line)">
+        <p style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--t3);margin-bottom:1.25rem">Fotografie</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5px;background:var(--line)">
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Outdoor / Street Shooting</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">1–2 Std. outdoor, bis zu 300 Aufnahmen, 25 Bilder zur Auswahl, inkl. Bildbearbeitung.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">50 – 300 €</div>
+          </div>
+          <div style="background:var(--bg3);padding:1.25rem 1.5rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--t1);margin-bottom:.3rem">Immobilienfotografie</div>
+            <div style="font-size:11px;color:var(--t3);line-height:1.6;font-weight:200;margin-bottom:.75rem">Innen- und Außenaufnahmen für Exposés, Vermarktung und Architekturpräsentation.</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">auf Anfrage</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pkg-foot">
+        <p><strong>Individuelles Projekt?</strong> Kein Problem — wir erstellen euch ein maßgeschneidertes Angebot.</p>
+        <a href="#kontakt" class="link-gold">Jetzt anfragen →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -465,7 +600,7 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
     <div class="reveal d2">
       <div class="c-lines">
         <div class="cl"><span class="ck">E-Mail</span><span class="cv"><a href="mailto:kontakt@nkzs.de">kontakt@nkzs.de</a></span></div>
-        <div class="cl"><span class="ck">Instagram</span><span class="cv"><a href="https://www.instagram.com/nkzs.de/" target="_blank">@nkzs.de</a></span></div>
+        <div class="cl"><span class="ck">Instagram</span><span class="cv"><a href="https://www.instagram.com/nkzs.de/" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>@nkzs.de</a></span></div>
         <div class="cl"><span class="ck">Website</span><span class="cv">nkzs.de</span></div>
         <div class="cl"><span class="ck">Standort</span><span class="cv">Gießen · Frankfurt · Deutschland</span></div>
         <div class="cl"><span class="ck">Reaktionszeit</span><span class="cv" style="color:var(--gold)">innerhalb 24h</span></div>
@@ -481,7 +616,7 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
 <footer>
   <div class="f-logo">NKZS</div>
   <div class="f-copy">© 2026 NKZS Production · Kleinunternehmer gem. §19 UStG · Gießen</div>
-  <div class="f-links"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
+  <div class="f-links"><a href="https://www.instagram.com/nkzs.de/" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
 </footer>
 
 <script>
