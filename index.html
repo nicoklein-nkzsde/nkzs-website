@@ -230,6 +230,25 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
 
 /* progress bar */
 #progress{position:fixed;top:0;left:0;z-index:300;height:2px;background:var(--gold);width:0%;transition:width .1s linear}
+
+/* ── EASTER EGGS ── */
+.egg-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0);pointer-events:none;display:flex;align-items:center;justify-content:center;transition:background .6s}
+.egg-overlay.active{background:rgba(0,0,0,.93);pointer-events:all}
+.egg-box{opacity:0;transform:scale(.94) translateY(10px);transition:opacity .5s .2s,transform .5s .2s;text-align:center;padding:3rem 2rem;max-width:500px;width:90%}
+.egg-overlay.active .egg-box{opacity:1;transform:scale(1) translateY(0)}
+.egg-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,7vw,58px);letter-spacing:.06em;color:#e8e4df;line-height:1.05;position:relative}
+.egg-title.g{color:#c9a84c}
+.egg-title.glitch{animation:glitch .4s infinite}
+@keyframes glitch{0%,100%{text-shadow:none}25%{text-shadow:-2px 0 #c9a84c}75%{text-shadow:2px 0 #e8e4df}}
+.egg-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:#c9a84c;margin:1.25rem 0 1rem;letter-spacing:.04em}
+.egg-text{font-size:13px;color:rgba(232,228,223,.55);line-height:1.85;font-weight:200}
+.egg-code{margin-top:1.25rem;font-family:'DM Mono',monospace;font-size:10px;color:rgba(232,228,223,.2);letter-spacing:.12em}
+.egg-close{margin-top:2rem;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,228,223,.28);cursor:pointer;transition:color .2s;display:inline-block}
+.egg-close:hover{color:#e8e4df}
+.stars-canvas{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0;transition:opacity .8s}
+.stars-canvas.active{opacity:1}
+.custom-cursor{width:6px;height:6px;background:#c9a84c;border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:transform .1s}
+.custom-cursor-ring{width:30px;height:30px;border:.5px solid rgba(201,168,76,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s}
 </style>
 </head>
 <body>
@@ -528,6 +547,140 @@ setTimeout(() => {
   const cur = document.querySelector('.hero-cursor');
   if (cur) cur.style.display = 'none';
 }, 5500);
+</script>
+
+
+<!-- EASTER EGG OVERLAY -->
+<canvas class="stars-canvas" id="starsCanvas"></canvas>
+<div class="egg-overlay" id="eggOverlay" onclick="if(event.target===this)closeEgg()">
+  <div class="egg-box">
+    <div class="egg-title" id="eggLine1"></div>
+    <div class="egg-title" id="eggLine2"></div>
+    <div class="egg-title g glitch" id="eggLine3"></div>
+    <p class="egg-sub" id="eggQuote"></p>
+    <p class="egg-text" id="eggText"></p>
+    <p class="egg-code" id="eggCode"></p>
+    <div class="egg-close" onclick="closeEgg()">[ ESC ] schließen</div>
+  </div>
+</div>
+<div class="custom-cursor" id="cur"></div>
+<div class="custom-cursor-ring" id="ring"></div>
+
+<script>
+// ── EASTER EGGS ──
+const EGGS = [
+  { l1:'BREAKING RULES', l2:"ISN'T INTERESTING.", l3:'MAKING NEW ONES IS.', q:'— Christopher Nolan', t:'Du hast den ersten Frame gefunden.<br>Nolan sagte es. Wir leben es.<br>Willkommen hinter der Kamera.', c:'EGG_01 // KONAMI CODE // NKZS PRODUCTION' },
+  { l1:'EVERY FILM', l2:'SHOULD HAVE', l3:'ITS OWN WORLD.', q:'— Christopher Nolan', t:'Nicht jeder sieht die versteckte Schicht.<br>Du schon. Das ist der Unterschied.', c:'EGG_02 // LOGO ×5 // NKZS PRODUCTION' },
+  { l1:'POUR EVERYTHING', l2:'INTO IT.', l3:'REALLY LOVE IT.', q:'— Christopher Nolan', t:'Das ist unser Versprechen an jeden Kunden.<br>Nicht 80%. Nicht 90%.<br>Alles.', c:'EGG_03 // TAGLINE CLICK // NKZS PRODUCTION' },
+  { l1:'YOU WANT', l2:'TO BE FOOLED.', l3:"BUT YOU DON'T BELIEVE IT.", q:'— The Prestige, 2006', t:'Das ist Kino. Das ist unsere Arbeit.<br>Bilder erschaffen die du nicht vergisst.<br>Frames die sich einbrennen.', c:'EGG_04 // TYPE "NKZS" // NKZS PRODUCTION' },
+  { l1:'AN IDEA IS', l2:'LIKE A VIRUS.', l3:'RESILIENT. HIGHLY CONTAGIOUS.', q:'— Inception, 2010', t:'Genau so funktioniert guter Content.<br>Eine Idee. Ein Frame. Eine Emotion.<br>Und sie breitet sich aus.', c:'EGG_05 // FOOTER ×3 // NKZS PRODUCTION' },
+  { l1:'DO NOT GO', l2:'GENTLE INTO', l3:'THAT GOOD NIGHT.', q:'— Dylan Thomas / Interstellar, 2014', t:'Du hast alle gefunden.<br>Sehr wenige schaffen das.<br>Jetzt weißt du wer wir wirklich sind.', c:'EGG_FINAL // ALL FOUND // NKZS PRODUCTION' }
+];
+let found = new Set();
+
+function openEgg(id) {
+  found.add(id);
+  const e = found.size >= 5 ? EGGS[5] : EGGS[id];
+  document.getElementById('eggLine1').textContent = e.l1;
+  document.getElementById('eggLine2').textContent = e.l2;
+  document.getElementById('eggLine3').textContent = e.l3;
+  document.getElementById('eggQuote').textContent = e.q;
+  document.getElementById('eggText').innerHTML = e.t;
+  document.getElementById('eggCode').textContent = e.c;
+  document.getElementById('eggOverlay').classList.add('active');
+  document.getElementById('starsCanvas').classList.add('active');
+  startStars();
+}
+function closeEgg() {
+  document.getElementById('eggOverlay').classList.remove('active');
+  document.getElementById('starsCanvas').classList.remove('active');
+}
+
+// Console
+console.log('%c NKZS PRODUCTION ', 'background:#0a0a0a;color:#c9a84c;font-size:18px;font-family:monospace;padding:8px 16px;border:1px solid #c9a84c');
+console.log('%c \"Every film should have its own world.\" — Christopher Nolan ', 'color:#e8e4df;font-size:12px;font-family:monospace;font-style:italic');
+console.log('%c Du liest Quellcode. Wir mögen dich bereits. ', 'color:rgba(232,228,223,0.35);font-size:11px;font-family:monospace');
+console.log('%c Wenn du filmst oder codest: kontakt@nkzs.de ', 'color:rgba(201,168,76,0.5);font-size:11px;font-family:monospace');
+
+// Custom cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,.pkg-btn,.svc,.firm,.wi,.btn-primary,.btn-ghost').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='50px';ring.style.height='50px';cur.style.transform='translate(-50%,-50%) scale(2)';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='30px';ring.style.height='30px';cur.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+// EGG 1 — Konami
+const K=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let ki=0;
+document.addEventListener('keydown',e=>{
+  if(e.key===K[ki]){ki++;if(ki===K.length){openEgg(0);ki=0;}}else ki=0;
+  if(e.key==='Escape')closeEgg();
+});
+
+// EGG 2 — Logo 5x
+let lc=0,lt;
+document.querySelector('.logo').addEventListener('click',()=>{
+  lc++;clearTimeout(lt);lt=setTimeout(()=>lc=0,2000);
+  if(lc>=5){openEgg(1);lc=0;}
+});
+
+// EGG 3 — Tagline click
+const sub = document.querySelector('.hero-sub');
+if(sub) sub.addEventListener('click',()=>openEgg(2));
+
+// EGG 4 — type "nkzs"
+let tp='';
+document.addEventListener('keydown',e=>{
+  tp+=e.key.toLowerCase();tp=tp.slice(-4);
+  if(tp==='nkzs'){
+    openEgg(3);
+    document.querySelectorAll('.tag').forEach((t,i)=>{
+      setTimeout(()=>{
+        t.style.borderColor='rgba(201,168,76,.6)';t.style.color='rgba(201,168,76,.8)';
+        setTimeout(()=>{t.style.borderColor='';t.style.color='';},1500);
+      },i*80);
+    });
+  }
+});
+
+// EGG 5 — Footer logo 3x
+let fc=0,ft;
+const fl = document.querySelector('.f-logo');
+if(fl) fl.addEventListener('click',()=>{
+  fc++;clearTimeout(ft);ft=setTimeout(()=>fc=0,1500);
+  if(fc>=3){openEgg(4);fc=0;}
+  else{fl.textContent='EST. 2021 ✦';setTimeout(()=>fl.textContent='NKZS',2000);}
+});
+
+// Stars
+function startStars(){
+  const c=document.getElementById('starsCanvas');
+  const ctx=c.getContext('2d');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const S=Array.from({length:220},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.3,spd:Math.random()*.5+.1,o:Math.random()}));
+  (function draw(){
+    if(!document.getElementById('starsCanvas').classList.contains('active'))return;
+    ctx.clearRect(0,0,c.width,c.height);
+    S.forEach(s=>{
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(201,168,76,${s.o})`;ctx.fill();
+      s.y-=s.spd;s.o+=(Math.random()-.5)*.05;s.o=Math.max(.03,Math.min(.9,s.o));
+      if(s.y<0){s.y=c.height;s.x=Math.random()*c.width;}
+    });
+    requestAnimationFrame(draw);
+  })();
+}
 </script>
 
 </body>
