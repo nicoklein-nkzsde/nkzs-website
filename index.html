@@ -416,6 +416,32 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
   .vid-meta{flex-direction:column;align-items:flex-start;gap:.75rem}
 }
 
+
+/* ── CONTRAST FIXES ── */
+.svc-desc{color:rgba(232,228,223,.55)!important}
+.firm-desc{color:rgba(232,228,223,.65)!important}
+.firm-sub{color:rgba(232,228,223,.55)!important}
+.tag{color:rgba(232,228,223,.5)!important;border-color:rgba(232,228,223,.18)!important}
+.pkg-ul li{color:rgba(232,228,223,.72)!important}
+.pkg-ul li::before{color:rgba(201,168,76,.6)!important}
+.pkg-mo{color:rgba(232,228,223,.5)!important}
+.ps-desc{color:rgba(232,228,223,.55)!important}
+.tm-desc{color:rgba(232,228,223,.55)!important}
+.hero-desc{color:rgba(232,228,223,.7)!important}
+.ck{color:rgba(232,228,223,.5)!important}
+.kl-desc{color:rgba(232,228,223,.65)!important}
+.wi-cat{color:rgba(232,228,223,.6)!important}
+.pkg-name{color:rgba(232,228,223,.5)!important}
+.svc-i{color:rgba(201,168,76,.6)!important}
+.firm-n{color:rgba(232,228,223,.4)!important}
+.hstat-l{color:rgba(232,228,223,.45)!important}
+.nav-links a{color:rgba(232,228,223,.55)!important}
+.f-copy{color:rgba(232,228,223,.4)!important}
+.f-links a{color:rgba(232,228,223,.4)!important}
+.pkg-period,.pkg-foot p{color:rgba(232,228,223,.55)!important}
+/* pkg info box dark on dark fix */
+div[style*="border:.5px solid var(--line)"][style*="font-size:11px"]{color:rgba(232,228,223,.45)!important}
+
 </style>
 </head>
 <body>
@@ -465,7 +491,7 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
     <p class="hero-desc">Cineastische Firmenfilme, Imagefilme und Werbevideos — und auf Wunsch komplettes Social Media Management. Alles aus einer Hand, 8 Profis, ein fester Ansprechpartner.</p>
     <div class="hero-actions">
       <a href="#kontakt" class="btn-primary">Kostenloses Erstgespräch →</a>
-      <a href="#arbeiten" class="btn-ghost">Referenzen ansehen</a>
+      <a href="#arbeiten" class="btn-ghost">Portfolio ansehen</a>
     </div>
     <div class="hero-stats">
       <div><div class="hstat-n" data-count="8" data-suffix="">0</div><div class="hstat-l">Personen im Team</div></div>
@@ -707,16 +733,36 @@ footer{padding:1.75rem 3rem;border-top:0.5px solid var(--line);display:flex;just
     </div>
 
     <!-- 4. Lion's 987s -->
-    <div class="wi" onclick="openVideo('uQRNFUlawgs','Lion's 987s','Automotive · Kurzfilm')">
+    <div class="wi" onclick="openVideo('uQRNFUlawgs','Lions 987s','Automotive · Kurzfilm')">
       <div class="wi-inner" style="background:linear-gradient(135deg,#160e08,#0a0a0a)">Lion's 987s</div>
       <div class="wi-play"></div>
       <div class="wi-ov">
         <div class="wi-cat">Automotive · Kurzfilm</div>
-        <div class="wi-title">Lion's 987s</div>
+        <div class="wi-title">Lion&#39;s 987s</div>
       </div>
     </div>
 
-    <!-- 5. Dein Projekt CTA -->
+    <!-- 5. Uwe Weller Feinwerktechnik -->
+    <div class="wi" onclick="openVideo('1IVgqQ7nyJU','Technologie Inside – Metall 3D-Druck','Corporate Film · Uwe Weller Feinwerktechnik')">
+      <div class="wi-inner" style="background:linear-gradient(135deg,#0e1218,#0a0a0a)">Uwe Weller</div>
+      <div class="wi-play"></div>
+      <div class="wi-ov">
+        <div class="wi-cat">Corporate Film · Referenz</div>
+        <div class="wi-title">Technologie Inside – Metall 3D-Druck</div>
+      </div>
+    </div>
+
+    <!-- 6. Bosbach Immobilien Zypern -->
+    <div class="wi" onclick="openVideo('OVsVChVri2Q','Bosbach Immobilien – Zypern Documentary','Documentary · Immobilien')">
+      <div class="wi-inner" style="background:linear-gradient(135deg,#0a0e18,#0a0a0a)">Bosbach Immobilien</div>
+      <div class="wi-play"></div>
+      <div class="wi-ov">
+        <div class="wi-cat">Documentary · Immobilien</div>
+        <div class="wi-title">Bosbach Immobilien – Zypern</div>
+      </div>
+    </div>
+
+    <!-- 7. Dein Projekt CTA -->
     <div class="wi" style="cursor:default" onclick="document.getElementById('kontakt').scrollIntoView({behavior:'smooth'})">
       <div class="wi-inner" style="background:var(--bg3);cursor:pointer"></div>
       <div class="wi-ov" style="opacity:1;background:linear-gradient(to top,rgba(10,10,10,.97),rgba(10,10,10,.6))">
@@ -1038,7 +1084,9 @@ const THUMBS = {
   'vBig1kVT0Qw': 'thumb_cinematic.jpg',
   'POLewwY4faY': 'thumb_bialetti.jpg',
   'mfghWW_6ZCk': 'thumb_herzogstand.jpg',
-  'uQRNFUlawgs': 'thumb_lions.jpg'
+  'uQRNFUlawgs': 'thumb_lions.jpg',
+  '1IVgqQ7nyJU': 'thumb_weller.jpg',
+  'OVsVChVri2Q': 'thumb_bosbach.jpg'
 };
 document.querySelectorAll('.wi[onclick]').forEach(el => {
   const m = (el.getAttribute('onclick')||'').match(/openVideo\('([^']+)'/);
